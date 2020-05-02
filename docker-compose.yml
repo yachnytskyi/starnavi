@@ -1,0 +1,32 @@
+version: '3'
+    
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  pgadmin:
+    image: dpage/pgadmin4:4.17
+    links:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'test@test.com'
+      PGADMIN_DEFAULT_PASSWORD: 'test'
+    volumes:
+      - "./deploy/pgadmin/servers.json:/pgadmin4/servers.json"
+    ports:
+      - "5050:80"
+    restart: always
+
