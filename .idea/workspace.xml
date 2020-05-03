@@ -19,7 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4ce35a15-d745-4d8b-a29d-a7e4a72eef9e" name="Default Changelist" comment="" />
+    <list default="true" id="4ce35a15-d745-4d8b-a29d-a7e4a72eef9e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/account/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/posts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/posts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starnavi/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/starnavi/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +43,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1bDORGPrr2vSp3YAYBE6H54xrlR" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -86,6 +95,10 @@
       <workItem from="1588256090670" duration="4855000" />
       <workItem from="1588324586595" duration="6914000" />
       <workItem from="1588418365991" duration="7578000" />
+      <workItem from="1588428181382" duration="214000" />
+      <workItem from="1588428423341" duration="2063000" />
+      <workItem from="1588430532993" duration="122000" />
+      <workItem from="1588430908055" duration="613000" />
     </task>
     <servers />
   </component>
@@ -102,6 +115,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="413" y="276" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1588420569072">

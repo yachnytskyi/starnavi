@@ -29,7 +29,7 @@ urlpatterns = [
     path('posts/<int:post_id>/update/', api_update_post_view, name="update"),
     path('posts/create/', api_create_post_view, name="create"),
     path('posts/<int:post_id>/delete/', api_delete_post_view, name="delete"),
-
+    path('account/', include('account.urls', 'account')),
 ]
 
 # router = routers.DefaultRouter()
