@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from account.models import Account
 from posts.models import Post
@@ -8,6 +9,7 @@ from posts.serializers import PostSerializer
 
 
 @api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
 def api_detail_post_view(request, post_id):
     try:
         post = Post.objects.get(pk=post_id)
@@ -20,8 +22,9 @@ def api_detail_post_view(request, post_id):
 
 
 @api_view(['POST', ])
+@permission_classes((IsAuthenticated,))
 def api_create_post_view(request):
-    account = Account.objects.get(pk=1)
+    account = request.user
     post = Post(author=account)
     if request.method == "POST":
         serializer = PostSerializer(post, data=request.data)
@@ -33,11 +36,16 @@ def api_create_post_view(request):
 
 
 @api_view(['PUT', ])
+@permission_classes((IsAuthenticated,))
 def api_update_post_view(request, post_id):
     try:
         post = Post.objects.get(pk=post_id)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    user = request.user
+    if post.author != user:
+        return Response({'response': "You don't have permissions to edit that."})
 
     if request.method == "PUT":
         serializer = PostSerializer(post, data=request.data)
@@ -50,11 +58,16 @@ def api_update_post_view(request, post_id):
 
 
 @api_view(['DELETE', ])
+@permission_classes((IsAuthenticated,))
 def api_delete_post_view(request, post_id):
     try:
         post = Post.objects.get(pk=post_id)
     except Post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    user = request.user
+    if post.author != user:
+        return Response({'response': "You don't have permissions to delete that."})
 
     if request.method == "DELETE":
         operation = post.delete()

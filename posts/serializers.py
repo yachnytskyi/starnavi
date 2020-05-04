@@ -3,12 +3,12 @@ from posts.models import Post
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.SerializerMethodField('get_username_from_author')
+
     class Meta:
         model = Post
-        fields = ['title', 'body', 'date_published', 'date_updated', 'post_like', 'post_unlike']
+        fields = ['title', 'body', 'date_published', 'date_updated', 'post_like', 'post_unlike', 'username']
 
-
-# class GroupSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = Group
-#         fields = ['url', 'name']
+    def get_username_from_author(self, post):
+        username = post.author.username
+        return username
