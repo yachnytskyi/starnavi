@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from account.models import Account
 from posts.models import Post
 from posts.serializers import PostSerializer
 
@@ -20,7 +21,8 @@ def api_detail_post_view(request, post_id):
 
 @api_view(['POST', ])
 def api_create_post_view(request):
-    post = Post()
+    account = Account.objects.get(pk=1)
+    post = Post(author=account)
     if request.method == "POST":
         serializer = PostSerializer(post, data=request.data)
         data = {}

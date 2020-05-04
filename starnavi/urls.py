@@ -21,14 +21,10 @@ from posts.views import (
     api_update_post_view,
     api_delete_post_view,
     )
-app_name = 'posts'
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('posts/<int:post_id>/', api_detail_post_view, name="detail"),
-    path('posts/<int:post_id>/update/', api_update_post_view, name="update"),
-    path('posts/create/', api_create_post_view, name="create"),
-    path('posts/<int:post_id>/delete/', api_delete_post_view, name="delete"),
+    path('posts/', include('posts.urls', 'posts')),
     path('account/', include('account.urls', 'account')),
 ]
 

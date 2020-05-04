@@ -7,7 +7,7 @@ class Post(models.Model):
     body = models.TextField(max_length=5000, null=False, blank=False)
     date_published = models.DateTimeField(auto_now_add=True, verbose_name='date published')
     date_updated = models.DateTimeField(auto_now=True, verbose_name='date updated')
-    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post_like = models.IntegerField(default=0, verbose_name='post like')
     post_unlike = models.IntegerField(default=0, verbose_name='post unlike')
 
