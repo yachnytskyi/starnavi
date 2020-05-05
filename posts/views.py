@@ -1,11 +1,46 @@
+from django.core.paginator import Paginator
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
 
 from account.models import Account
 from posts.models import Post
 from posts.serializers import PostSerializer
+
+
+# def listing(request):
+#     contact_list = Contact.objects.all()
+#     paginator = Paginator(contact_list, 25) # Show 25 contacts per page.
+#
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+#     return render(request, 'list.html', {'page_obj': page_obj})
+
+
+@api_view(['GET', ])
+@permission_classes((IsAuthenticated,))
+def api_list_post_view(request):
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 1)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.method == "GET":
+        serializer = PostSerializer(page_obj, many=True)
+        return Response(serializer.data)
+
+
+class ApiPostListView(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
 
 
 @api_view(['GET', ])
