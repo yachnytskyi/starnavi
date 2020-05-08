@@ -18,20 +18,17 @@ from posts.serializers import PostSerializer
 @permission_classes((IsAuthenticated,))
 def api_list_post_view(request):
     post_list = Post.objects.all()
+    paginator = Paginator(post_list, 10)
     query = request.GET.get('search')
     if query:
         queryset_list = Post.objects.filter(Q(title__icontains=query) |
-                                            Q(body__icontains=query) |
-                                            Q(author__username__icontains=query))
-        paginator_query = Paginator(queryset_list, 10)
-        page_number_query = request.GET.get('page')
-        page_obj_query = paginator_query.get_page(page_number_query)
-        serializer = PostSerializer(page_obj_query, many=True)
+                                            Q(body__icontains=query))
+        serializer = PostSerializer(queryset_list, many=True)
         return Response(serializer.data)
     else:
-        paginator = Paginator(post_list, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
+        print("2")
         serializer = PostSerializer(page_obj, many=True)
         return Response(serializer.data)
 
