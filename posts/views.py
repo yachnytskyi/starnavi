@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -6,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from account.models import Account
 from posts.models import Post
@@ -16,12 +18,20 @@ from posts.serializers import PostSerializer
 @permission_classes((IsAuthenticated,))
 def api_list_post_view(request):
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 1)
-
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    if request.method == "GET":
+    query = request.GET.get('search')
+    if query:
+        queryset_list = Post.objects.filter(Q(title__icontains=query) |
+                                            Q(body__icontains=query) |
+                                            Q(author__username__icontains=query))
+        paginator_query = Paginator(queryset_list, 10)
+        page_number_query = request.GET.get('page')
+        page_obj_query = paginator_query.get_page(page_number_query)
+        serializer = PostSerializer(page_obj_query, many=True)
+        return Response(serializer.data)
+    else:
+        paginator = Paginator(post_list, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         serializer = PostSerializer(page_obj, many=True)
         return Response(serializer.data)
 
@@ -32,6 +42,8 @@ class ApiPostListView(ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('title', 'body', 'author__username')
 
 
 @api_view(['GET', ])
