@@ -28,5 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class AccountPropertiesSerializer(serializers.ModelSerializer):
-    model = Account
-    fields = ['pk', 'email', 'username']
+
+    class Meta:
+        model = Account
+        fields = ['pk', 'email', 'username']

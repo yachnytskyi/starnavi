@@ -31,7 +31,7 @@ def update_account_view(request):
     try:
         account = request.user
     except Account.DoesNotExist:
-        return Response(status=HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     serializer = AccountPropertiesSerializer(account, data=request.data)
     data = {}
