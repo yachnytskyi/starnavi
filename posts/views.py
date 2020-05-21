@@ -20,7 +20,6 @@ def api_list_post_view(request):
     paginator = Paginator(post_list, 10)
     query = request.GET.get('search')
     ordering = request.GET.get('ordering')
-    print(ordering)
     if query and not ordering:
         queryset_list = Post.objects.filter(Q(title__icontains=query) |
                                             Q(body__icontains=query))

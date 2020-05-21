@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'posts',
     'account',
+    'payments',
     'rest_framework.authtoken',
 ]
 
