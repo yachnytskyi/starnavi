@@ -10,16 +10,17 @@ INSTALLATION
 
 Please make sure the release file is unpacked under a Web-accessible directory. You shall see the following files and directories:
 
-account/	
-payments/ 	
-posts/ 	
-starnavi/ 	
-.gitattributes 
-.gitignore 	
-Dockerfile 
-docker-compose.yml 	
-manage.py 	
-requirements.txt 	
+account/
+payments/
+posts/
+starnavi/
+.gitattributes
+.gitignore
+Dockerfile
+docker-compose.yml
+manage.py
+requrements.txt
+
 
 REQUIREMENTS
 
