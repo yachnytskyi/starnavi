@@ -36,11 +36,6 @@ def api_list_post_view(request):
         page_obj = paginator.get_page(page_number)
         serializer = PostSerializer(page_obj, many=True)
         return Response(serializer.data)
-    # else:
-    #     page_number = request.GET.get('page')
-    #     page_obj = paginator.get_page(page_number)
-    #     serializer = PostSerializer(page_obj, many=True)
-    #     return Response(serializer.data)
 
 
 class ApiPostListView(ListAPIView):
