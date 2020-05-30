@@ -16,30 +16,31 @@ from posts.serializers import PostSerializer
 
 @api_view(['GET', ])
 def api_list_post_view(request):
-    post_list = Post.objects.order_by('-date_published')
-    paginator = Paginator(post_list, 10)
+    post_list = Post.objects.all()
+    page_number = request.GET.get('page')
     query = request.GET.get('search')
     ordering = request.GET.get('ordering')
-    if query and not ordering:
-        queryset_list = Post.objects.filter(Q(title__icontains=query) |
-                                            Q(body__icontains=query))
-        serializer = PostSerializer(queryset_list, many=True)
-        return Response(serializer.data)
-    if query and ordering:
-        queryset_list = Post.objects.filter(Q(title__icontains=query) |
-                                            Q(body__icontains=query)) 
-        queryset_list = queryset_list.order_by(ordering)
-        serializer = PostSerializer(queryset_list, many=True)
-        return Response(serializer.data)
-    if ordering:
-        queryset_list = Post.objects.order_by(ordering)
-        serializer = PostSerializer(queryset_list, many=True)
-        return Response(serializer.data)
-    else:
-        page_number = request.GET.get('page')
+    if query:
+        post_list = Post.objects.filter(Q(title__icontains=query) |
+                                        Q(body__icontains=query) |
+                                        Q(author__username__icontains=query))
+        if ordering:
+            post_list = post_list.order_by(ordering)
+
+        paginator = Paginator(post_list, 10)
         page_obj = paginator.get_page(page_number)
         serializer = PostSerializer(page_obj, many=True)
         return Response(serializer.data)
+    else:
+        paginator = Paginator(post_list, 10)
+        page_obj = paginator.get_page(page_number)
+        serializer = PostSerializer(page_obj, many=True)
+        return Response(serializer.data)
+    # else:
+    #     page_number = request.GET.get('page')
+    #     page_obj = paginator.get_page(page_number)
+    #     serializer = PostSerializer(page_obj, many=True)
+    #     return Response(serializer.data)
 
 
 class ApiPostListView(ListAPIView):

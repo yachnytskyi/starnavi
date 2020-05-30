@@ -11,5 +11,8 @@ class Post(models.Model):
     post_like = models.IntegerField(default=0, verbose_name='post like')
     post_unlike = models.IntegerField(default=0, verbose_name='post unlike')
 
+    class Meta:
+        ordering = ['-date_published']
+
     def __str__(self):
         return self.title
