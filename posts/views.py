@@ -9,7 +9,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter
 
-from account.models import Account
+# from account.models import Account
 from posts.models import Post
 from posts.serializers import PostSerializer
 
@@ -20,12 +20,38 @@ def api_list_post_view(request):
     page_number = request.GET.get('page')
     query = request.GET.get('search')
     ordering = request.GET.get('ordering')
+    filtration = request.GET.get('filtration')
+    print(filtration)
+    filters = {
+        'body': 'body__icontains',
+        'title': 'title__icontains',
+        'author': 'author__username__icontains'
+    }
+    query_filters = None
+
+    if filtration == 'or':
+        for key, value in filters.items():
+            if key in request.GET:
+                if query_filters is None:
+                    query_filters = Q(**{value: request.GET[key]})
+                else:
+                    query_filters = query_filters | Q(**{value: request.GET[key]})
+                print(value + "+")
+                print(query_filters)
+    if filtration == 'and':
+        for key, value in filters.items():
+            if key in request.GET:
+                print(value)
+                post_list = post_list.filter(**{value: request.GET[key]})
+    if query_filters is not None:
+        post_list = post_list.filter(query_filters)
+
     if query:
         post_list = Post.objects.filter(Q(title__icontains=query) |
                                         Q(body__icontains=query) |
                                         Q(author__username__icontains=query))
-        if ordering:
-            post_list = post_list.order_by(ordering)
+    if ordering:
+        post_list = post_list.order_by(ordering)
 
     paginator = Paginator(post_list, 10)
     page_obj = paginator.get_page(page_number)
