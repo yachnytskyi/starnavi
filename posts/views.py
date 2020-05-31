@@ -47,7 +47,7 @@ def api_list_post_view(request):
         post_list = post_list.filter(query_filters)
 
     if query:
-        post_list = Post.objects.filter(Q(title__icontains=query) |
+        post_list = post_list.filter(Q(title__icontains=query) |
                                         Q(body__icontains=query) |
                                         Q(author__username__icontains=query))
     if ordering:
