@@ -27,15 +27,10 @@ def api_list_post_view(request):
         if ordering:
             post_list = post_list.order_by(ordering)
 
-        paginator = Paginator(post_list, 10)
-        page_obj = paginator.get_page(page_number)
-        serializer = PostSerializer(page_obj, many=True)
-        return Response(serializer.data)
-    else:
-        paginator = Paginator(post_list, 10)
-        page_obj = paginator.get_page(page_number)
-        serializer = PostSerializer(page_obj, many=True)
-        return Response(serializer.data)
+    paginator = Paginator(post_list, 10)
+    page_obj = paginator.get_page(page_number)
+    serializer = PostSerializer(page_obj, many=True)
+    return Response(serializer.data)
 
 
 class ApiPostListView(ListAPIView):
