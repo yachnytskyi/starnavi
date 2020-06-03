@@ -21,35 +21,45 @@ def api_list_post_view(request):
     query = request.GET.get('search')
     ordering = request.GET.get('ordering')
     filtration = request.GET.get('filtration')
-    print(filtration)
-    filters = {
-        'body': 'body__icontains',
-        'title': 'title__icontains',
-        'author': 'author__username__icontains'
-    }
+    filter_type = request.GET.get('filter_type')
+    start_date = request.GET.get('start_date', '2020-1-1')
+    end_date = request.GET.get('end_date', '2040-1-1')
+    filters = {}
+    if start_date != '2020-1-1' or end_date != '2020-1-1':
+        post_list = post_list.filter(date_published__range=(start_date, end_date))
+
+    if filter_type == 'icontains' or filter_type is None:
+        filters = {
+            'body': 'body__icontains',
+            'title': 'title__icontains',
+            'author': 'author__username__icontains',
+        }
+    if filter_type == 'startswith':
+        filters = {
+            'body': 'body__startswith',
+            'title': 'title__startswith',
+            'author': 'author__username__startswith',
+        }
     query_filters = None
 
-    if filtration == 'or':
+    if filtration == 'or' or filtration is None:
         for key, value in filters.items():
             if key in request.GET:
                 if query_filters is None:
                     query_filters = Q(**{value: request.GET[key]})
                 else:
                     query_filters = query_filters | Q(**{value: request.GET[key]})
-                print(value + "+")
-                print(query_filters)
     if filtration == 'and':
         for key, value in filters.items():
             if key in request.GET:
-                print(value)
                 post_list = post_list.filter(**{value: request.GET[key]})
     if query_filters is not None:
         post_list = post_list.filter(query_filters)
 
     if query:
         post_list = post_list.filter(Q(title__icontains=query) |
-                                        Q(body__icontains=query) |
-                                        Q(author__username__icontains=query))
+                                     Q(body__icontains=query) |
+                                     Q(author__username__icontains=query))
     if ordering:
         post_list = post_list.order_by(ordering)
 
@@ -87,7 +97,6 @@ def api_create_post_view(request):
     account = request.user
     post = Post(author=account)
     serializer = PostSerializer(post, data=request.data)
-    data = {}
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
