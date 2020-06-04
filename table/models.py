@@ -26,7 +26,7 @@ class Table(models.Model):
 
 class Reservation(models.Model):
     reservation_date = models.DateField(auto_now_add=True)
-    table = models.ManyToManyField(Table, through='TableReservation', blank=True)
+    table = models.ManyToManyField(Table, blank=True)
 
     class Meta:
         ordering = ['-reservation_date']
@@ -35,7 +35,4 @@ class Reservation(models.Model):
         return self.reservation_date
 
 
-class TableReservation(models.Model):
-    table = models.ForeignKey(Table, on_delete=models.CASCADE, blank=True, null=True)
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+
