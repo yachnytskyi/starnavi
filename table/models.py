@@ -9,6 +9,7 @@ table_shape = (
 
 class Table(models.Model):
     number = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(500)])
+    hall_name = models.CharField(max_length=200, default='First hall')
     places_amount = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     table_shape = models.CharField(choices=table_shape, default='O', max_length=100)
     coordinate_x = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
@@ -25,7 +26,7 @@ class Table(models.Model):
 
 class Reservation(models.Model):
     reservation_date = models.DateField(auto_now_add=True)
-    table = models.ManyToManyField(Table, through='TableReservation')
+    table = models.ManyToManyField(Table, through='TableReservation', blank=True)
 
     class Meta:
         ordering = ['-reservation_date']
@@ -35,6 +36,6 @@ class Reservation(models.Model):
 
 
 class TableReservation(models.Model):
-    table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, blank=True, null=True)
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
