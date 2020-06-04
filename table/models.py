@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -25,7 +27,7 @@ class Table(models.Model):
 
 
 class Reservation(models.Model):
-    reservation_date = models.DateField(auto_now_add=True)
+    reservation_date = models.DateField(default=date.today)
     table = models.ManyToManyField(Table, blank=True)
 
     class Meta:

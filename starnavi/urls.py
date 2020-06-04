@@ -26,6 +26,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('posts/', include('posts.urls', 'posts')),
     path('payments/', include('payments.urls', 'payments')),
+    path('tables/', include('table.urls', 'tables')),
     path('account/', include('account.urls', 'account')),
 ]
 
