@@ -24,6 +24,13 @@ SECRET_KEY = 'vf0%qo9gsd_y#tu((u9$%q15*g7lc4u^!0d^_ym!rvuii65c2y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_HOST = 'http://localhost:8000/'
+EMAIL_HOST_USER = 'yachnytskyi1992@gmai.com'
+EMAIL_HOST_PASSWORD = 'postgres'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 ALLOWED_HOSTS = []
 
 # Application definition

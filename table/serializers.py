@@ -10,9 +10,8 @@ class ReservationSerializer(serializers.ModelSerializer):
     #     slug_field='number',
     # )
     tables = serializers.PrimaryKeyRelatedField(
-        # queryset=Table.objects.all(),
+        queryset=Table.objects.all(),
         many=True,
-        read_only=True
     )
 
     class Meta:

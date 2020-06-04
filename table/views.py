@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -18,6 +20,14 @@ def api_list_reservation_view(request):
         serializer = ReservationSerializer(reservation_create, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            message = f"Hello, you ordered the {request.POST.get('tables')} table on" \
+                      f"this time {request.POST.get('reservation_date')}"
+            send_mail('Review',
+                      message,
+                      settings.EMAIL_HOST_USER,
+                      [request.POST.get('user.email')],
+                      fail_silently=False
+                      )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
