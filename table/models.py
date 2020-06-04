@@ -25,16 +25,24 @@ class Table(models.Model):
     def __str__(self):
         return self.number
 
+    def check_size_table(self):
+        tables = Table.objects.all()
+        check_list = []
+        for table in tables:
+            check_list.append(range(table.coordinate_x, table.width))
+            check_list.append(range(table.coordinate_y, table.height))
+        if self.coordinate_x in check_list or self.coordinate_y in check_list:
+            return False
+        return True
+
+
+
 
 class Reservation(models.Model):
     reservation_date = models.DateField(default=date.today)
-    table = models.ManyToManyField(Table, blank=True)
+    tables = models.ManyToManyField(Table, blank=True)
 
     class Meta:
         ordering = ['-reservation_date']
-
-    def __str__(self):
-        return self.reservation_date
-
 
 

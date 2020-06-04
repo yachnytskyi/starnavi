@@ -3,27 +3,27 @@ from rest_framework import serializers
 from table.models import Table, Reservation
 
 
-
 class ReservationSerializer(serializers.ModelSerializer):
-    tables_set = serializers.SlugRelatedField(
+    # tables = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='number',
+    # )
+    tables = serializers.PrimaryKeyRelatedField(
         # queryset=Table.objects.all(),
         many=True,
-        read_only=True,
-        slug_field='number',
+        read_only=True
     )
 
     class Meta:
         model = Reservation
-        fields = ('id', 'reservation_date', 'tables_set')
+        fields = ('id', 'reservation_date', 'tables')
 
 
 class TableSerializer(serializers.ModelSerializer):
-    reservations = ReservationSerializer(many=True, read_only=True)
+    reservation_set = ReservationSerializer(many=True, read_only=True)
 
     class Meta:
         model = Table
         fields = ('id', 'number', 'hall_name', 'places_amount', 'table_shape',
-                  'coordinate_x', 'coordinate_y', 'width', 'height', 'reservations')
-
-
-
+                  'coordinate_x', 'coordinate_y', 'width', 'height', 'reservation_set')

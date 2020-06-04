@@ -28,7 +28,6 @@ def api_detail_status_view(request, status_id):
 def api_create_status_view(request):
     status_create = Status()
     serializer = StatusesSerializer(status_create, data=request.data)
-    data = {}
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
