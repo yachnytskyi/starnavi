@@ -27,10 +27,15 @@ class Table(models.Model):
 
 
 class Reservation(models.Model):
-    reservation_date = models.DateField(default=date.today)
+    reservation_date = models.DateField(default=date.today, unique=True)
     tables = models.ManyToManyField(Table, blank=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
 
     class Meta:
         ordering = ['-reservation_date']
+
+    def __str__(self):
+        return self.email
 
 

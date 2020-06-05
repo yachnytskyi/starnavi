@@ -20,7 +20,7 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 
 class TableSerializer(serializers.ModelSerializer):
-    reservation_set = ReservationSerializer(many=True, read_only=True)
+    reservation_set = ReservationSerializer(many=True, read_only=False)
 
     class Meta:
         model = Table
