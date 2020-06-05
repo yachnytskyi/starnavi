@@ -20,12 +20,12 @@ def api_list_reservation_view(request):
         serializer = ReservationSerializer(reservation_create, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            message = f"Hello, you ordered the {request.POST.get('tables')} table on" \
+            message = f"Hello {request.POST.get('name')} you ordered the {request.POST.get('tables')} table on" \
                       f"this time {request.POST.get('reservation_date')}"
             send_mail('Review',
                       message,
                       settings.EMAIL_HOST_USER,
-                      [request.POST.get('user.email')],
+                      [request.POST.get('email')],
                       fail_silently=False
                       )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
