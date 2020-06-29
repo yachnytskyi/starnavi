@@ -1,5 +1,5 @@
 
-teelkiwi Python Test Task
+Steelkiwi Python Test Task
 Please fork this repository and resolve issues in the scope of this project. After having completed tasks you think are better to be done, please create a pull request and send a link to the HR you’ve been communicating with so far.
 Feel free to do as much of the assignment as you can - it could be either the whole task or separate assignments from each one of its levels (see Basic and Advanced Requirements lists). You should note the parts that you have implemented in the repository’s TASKS.md file. Remember - it’s important that you do as much as you can, but it is just as important to fully demonstrate the way you think and complete tasks while still presenting clean and concise quality code.
 Here you can find the ware-frames for the project.
