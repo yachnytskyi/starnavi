@@ -6,6 +6,7 @@ from account.views import (
     update_account_view,
     does_account_exist_view,
     ChangePasswordView,
+    Logout,
 )
 
 app_name = 'account'
@@ -17,5 +18,6 @@ urlpatterns = [
     path('properties/update/', update_account_view, name="update"),
     path('login/', ObtainAuthTokenView.as_view(), name="login"),
     path('register/', registration_view, name="register"),
+    path('logout/', Logout.as_view()),
 
 ]
