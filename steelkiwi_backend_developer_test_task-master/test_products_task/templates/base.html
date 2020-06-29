@@ -1,0 +1,72 @@
+{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}test_products_task{% endblock title %}</title>
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        {% block css %}
+            <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        <ul class="nav navbar-nav">
+          <li>
+              <a href="{% url 'home' %}">Home</a>
+          </li>
+          <li {% if active_tab == 'cart' %}class="active"{% endif %}>
+              <a href="{% url 'products:cart' %}">Cart</a></li>
+          {% if request.user.is_authenticated %}
+            <li {% if active_tab == 'orders' %}class="active"{% endif %}>
+                <a href="{% url 'payments:order_list' %}">Orders</a></li>
+            <li>
+            <a href="{% url 'users:logout' %}">{{ request.user.username }}, logout</a>
+            </li>
+            {% else %}
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+          {% endif %}
+
+        </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+
+
+    {% block modal %}{% endblock modal %}
+
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% block javascript %}
+        <script src="{% static 'js/project.js' %}"></script>
+    {% endblock javascript %}
+
+    </body>
+</html>
+

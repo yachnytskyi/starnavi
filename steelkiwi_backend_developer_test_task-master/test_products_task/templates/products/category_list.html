@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Categories</h2>
+    <div class="list-group">
+        {% for category in category_list %}
+            <a href="{{ category.get_absolute_url }}" class="list-group-item">
+              <h4 class="list-group-item-heading">{{ category.name }}</h4>
+            </a>
+        {% endfor %}
+    </div>
+  <h2>CHOICE OF THE WEEK</h2>
+  <h2>LIKES OF THE WEEK</h2>
+  <h2>NEW ARRIVALS</h2>
+{% endblock content %}
