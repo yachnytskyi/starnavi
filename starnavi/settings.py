@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'account',
     'payments',
     'table',
+    'movie',
     'rest_framework.authtoken',
 ]
 
