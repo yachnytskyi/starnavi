@@ -1,6 +1,6 @@
 Starnavi is created on Django, DRF, Postgresql
 
-Thanks for viewing the starnavi, it's the mix of the year tasks from the companies
+Thanks for viewing the starnavi, it's the mix of the test tasks from the companies
 
 Build Status
 
