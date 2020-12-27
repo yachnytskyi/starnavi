@@ -1,6 +1,6 @@
 Starnavi is created on Django, DRF, Postgresql
 
-Thanks for viewing the starnavi, it was created for learning and practice. starnavi - a simple pet project
+Thanks for viewing the starnavi, it's the mix of the year tasks from the companies
 
 Build Status
 
@@ -24,7 +24,7 @@ requrements.txt
 
 REQUIREMENTS
 
-The minimum requirement by Starnavi is that your Web server supports Django 3.04 or above. Starnavi has been tested with the Django developmentserver in Manjaro Linux with Docker. Please access the following URL to check if your Web server reaches the requirements by Starnavi:
+The minimum requirement by Starnavi is that your Web server supports Django 3.04 or above. Starnavi has been tested with the Django development server in Manjaro Linux with Docker. Please access the following URL to check if your Web server reaches the requirements by Starnavi:
 
 http://localhost:8080 (by default, it can be changed)
 
